@@ -41,7 +41,7 @@ class Router{
 	
 	static private var router:[String:Router] = [:]
 	
-	private let table = NSMutableDictionary()//:[String:ctrl] = [:]
+	private let table = NSMutableDictionary()
 	
 	static func get(_ key:String)->Router?{
 		return Router.router[key]
