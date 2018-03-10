@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		window = w
 		let base = UIViewController()
 		w.rootViewController = base
-		router.route(base, "main", Router.type.replace)
+		router.route(base, Router.type.replace).with("main")
 		w.makeKeyAndVisible()
 		return true
 	}

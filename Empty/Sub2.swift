@@ -19,7 +19,7 @@ class Sub2: UIViewController {
 		btn.setTitle("sub2 button", for: UIControlState.normal)
 		btn.center = CGPoint(x:self.view.frame.size.width / 2, y:100)
 		btn.addTarget(.touchUpInside){
-			Router.get("main")?.route(self.parent!, "main", Router.type.replace)
+			Router.get("main")?.route(self.parent!, Router.type.replace).with("main")
 		}
 		view.addSubview(btn)
 	}
