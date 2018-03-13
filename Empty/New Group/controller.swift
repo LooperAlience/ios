@@ -17,7 +17,6 @@ extension UIViewController{
 			UIViewController.navStack[hash] = NSMutableArray()
 		}
 		if let stack = UIViewController.navStack[hash] as? NSMutableArray {
-			print("stack \(hash) \(stack.count) - \(type)" )
 			if type == .replace {
 				if let c = stack.lastObject as? UIViewController{
 					c.removeFromParentViewController()

@@ -31,6 +31,7 @@ class Router{
 			run(f())
 		}
 		private func run(_ c:UIViewController){
+			//viewmodel, ,..
 			if let base = base as? UINavigationController{
 			}else if let base = base as? UITabBarController{
 			}else{
@@ -39,12 +40,12 @@ class Router{
 		}
 	}
 	
-	static private var router:[String:Router] = [:]
+	static private var router = NSMutableDictionary()
 	
 	private let table = NSMutableDictionary()
 	
 	static func get(_ key:String)->Router?{
-		return Router.router[key]
+		return Router.router[key] as? Router
 	}
 	init(_ key:String){
 		Router.router[key] = self
