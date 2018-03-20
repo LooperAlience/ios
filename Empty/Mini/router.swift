@@ -32,11 +32,11 @@ class Router{
 		}
 		private func run(_ c:UIViewController){
 			//viewmodel, ,..
-			if let base = base as? UINavigationController{
-			}else if let base = base as? UITabBarController{
-			}else{
+//            if let base = base as? UINavigationController{
+//            }else if let base = base as? UITabBarController{
+//            }else{
 				base.pushRouter(c, type)
-			}
+//            }
 		}
 	}
 	
