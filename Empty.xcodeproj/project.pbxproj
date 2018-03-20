@@ -13,11 +13,16 @@
 		3E2C3553204C569100A8E2CF /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2C3551204C569100A8E2CF /* Main.swift */; };
 		3E2C3554204C569100A8E2CF /* Main.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E2C3552204C569100A8E2CF /* Main.xib */; };
 		3E2C3556204C570B00A8E2CF /* view.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2C3555204C570B00A8E2CF /* view.swift */; };
-		3E2C3558204D1A4C00A8E2CF /* Mini.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2C3557204D1A4C00A8E2CF /* Mini.swift */; };
-		3E2C355A205040C500A8E2CF /* router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2C3559205040C500A8E2CF /* router.swift */; };
-		3E2C355D2050DC8900A8E2CF /* controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2C355C2050DC8900A8E2CF /* controller.swift */; };
 		3E2C355F20544CE400A8E2CF /* Sub1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2C355E20544CE400A8E2CF /* Sub1.swift */; };
 		3E2C356120544CF100A8E2CF /* Sub2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2C356020544CF100A8E2CF /* Sub2.swift */; };
+		A6A5C8C52060A1ED0058C03F /* Mini.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A5C8C22060A1ED0058C03F /* Mini.swift */; };
+		A6A5C8C62060A1ED0058C03F /* controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A5C8C32060A1ED0058C03F /* controller.swift */; };
+		A6A5C8C72060A1ED0058C03F /* router.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A5C8C42060A1ED0058C03F /* router.swift */; };
+		A6A5C8CD2060A2340058C03F /* TestView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6A5C8C92060A2340058C03F /* TestView.xib */; };
+		A6A5C8CE2060A2340058C03F /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A5C8CA2060A2340058C03F /* TestView.swift */; };
+		A6A5C8CF2060A2340058C03F /* TestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A5C8CB2060A2340058C03F /* TestVC.swift */; };
+		A6A5C8D02060A2340058C03F /* TestVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6A5C8CC2060A2340058C03F /* TestVC.xib */; };
+		A6A5C8D42060A28A0058C03F /* UINib.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A5C8D32060A28A0058C03F /* UINib.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,11 +34,16 @@
 		3E2C3551204C569100A8E2CF /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
 		3E2C3552204C569100A8E2CF /* Main.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Main.xib; sourceTree = "<group>"; };
 		3E2C3555204C570B00A8E2CF /* view.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = view.swift; sourceTree = "<group>"; };
-		3E2C3557204D1A4C00A8E2CF /* Mini.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mini.swift; sourceTree = "<group>"; };
-		3E2C3559205040C500A8E2CF /* router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = router.swift; sourceTree = "<group>"; };
-		3E2C355C2050DC8900A8E2CF /* controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = controller.swift; sourceTree = "<group>"; };
 		3E2C355E20544CE400A8E2CF /* Sub1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sub1.swift; sourceTree = "<group>"; };
 		3E2C356020544CF100A8E2CF /* Sub2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sub2.swift; sourceTree = "<group>"; };
+		A6A5C8C22060A1ED0058C03F /* Mini.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mini.swift; sourceTree = "<group>"; };
+		A6A5C8C32060A1ED0058C03F /* controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = controller.swift; sourceTree = "<group>"; };
+		A6A5C8C42060A1ED0058C03F /* router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = router.swift; sourceTree = "<group>"; };
+		A6A5C8C92060A2340058C03F /* TestView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestView.xib; sourceTree = "<group>"; };
+		A6A5C8CA2060A2340058C03F /* TestView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
+		A6A5C8CB2060A2340058C03F /* TestVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestVC.swift; sourceTree = "<group>"; };
+		A6A5C8CC2060A2340058C03F /* TestVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestVC.xib; sourceTree = "<group>"; };
+		A6A5C8D32060A28A0058C03F /* UINib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UINib.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +76,9 @@
 		3E2C353E204C543C00A8E2CF /* Empty */ = {
 			isa = PBXGroup;
 			children = (
+				A6A5C8D22060A28A0058C03F /* Extensions */,
+				A6A5C8C82060A2340058C03F /* Views */,
+				A6A5C8C12060A1ED0058C03F /* Mini */,
 				3E2C353F204C543C00A8E2CF /* AppDelegate.swift */,
 				3E2C3546204C543C00A8E2CF /* Assets.xcassets */,
 				3E2C3548204C543C00A8E2CF /* LaunchScreen.storyboard */,
@@ -73,22 +86,39 @@
 				3E2C3551204C569100A8E2CF /* Main.swift */,
 				3E2C3555204C570B00A8E2CF /* view.swift */,
 				3E2C3552204C569100A8E2CF /* Main.xib */,
-				3E2C3557204D1A4C00A8E2CF /* Mini.swift */,
-				3E2C355B205040D500A8E2CF /* mini */,
 				3E2C355E20544CE400A8E2CF /* Sub1.swift */,
 				3E2C356020544CF100A8E2CF /* Sub2.swift */,
 			);
 			path = Empty;
 			sourceTree = "<group>";
 		};
-		3E2C355B205040D500A8E2CF /* mini */ = {
+		A6A5C8C12060A1ED0058C03F /* Mini */ = {
 			isa = PBXGroup;
 			children = (
-				3E2C3559205040C500A8E2CF /* router.swift */,
-				3E2C355C2050DC8900A8E2CF /* controller.swift */,
+				A6A5C8C22060A1ED0058C03F /* Mini.swift */,
+				A6A5C8C32060A1ED0058C03F /* controller.swift */,
+				A6A5C8C42060A1ED0058C03F /* router.swift */,
 			);
-			name = mini;
-			path = "New Group";
+			path = Mini;
+			sourceTree = "<group>";
+		};
+		A6A5C8C82060A2340058C03F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A6A5C8C92060A2340058C03F /* TestView.xib */,
+				A6A5C8CA2060A2340058C03F /* TestView.swift */,
+				A6A5C8CB2060A2340058C03F /* TestVC.swift */,
+				A6A5C8CC2060A2340058C03F /* TestVC.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A6A5C8D22060A28A0058C03F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A6A5C8D32060A28A0058C03F /* UINib.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,7 +180,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6A5C8CD2060A2340058C03F /* TestView.xib in Resources */,
 				3E2C354A204C543C00A8E2CF /* LaunchScreen.storyboard in Resources */,
+				A6A5C8D02060A2340058C03F /* TestVC.xib in Resources */,
 				3E2C3554204C569100A8E2CF /* Main.xib in Resources */,
 				3E2C3547204C543C00A8E2CF /* Assets.xcassets in Resources */,
 			);
@@ -163,13 +195,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6A5C8CF2060A2340058C03F /* TestVC.swift in Sources */,
+				A6A5C8C72060A1ED0058C03F /* router.swift in Sources */,
+				A6A5C8C52060A1ED0058C03F /* Mini.swift in Sources */,
 				3E2C3553204C569100A8E2CF /* Main.swift in Sources */,
 				3E2C356120544CF100A8E2CF /* Sub2.swift in Sources */,
-				3E2C355D2050DC8900A8E2CF /* controller.swift in Sources */,
 				3E2C3556204C570B00A8E2CF /* view.swift in Sources */,
-				3E2C3558204D1A4C00A8E2CF /* Mini.swift in Sources */,
 				3E2C355F20544CE400A8E2CF /* Sub1.swift in Sources */,
-				3E2C355A205040C500A8E2CF /* router.swift in Sources */,
+				A6A5C8CE2060A2340058C03F /* TestView.swift in Sources */,
+				A6A5C8C62060A1ED0058C03F /* controller.swift in Sources */,
+				A6A5C8D42060A28A0058C03F /* UINib.swift in Sources */,
 				3E2C3540204C543C00A8E2CF /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -300,6 +335,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5M2GQ2DR6P;
 				INFOPLIST_FILE = Empty/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bsidesoft.ios.Empty;
@@ -314,6 +350,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5M2GQ2DR6P;
 				INFOPLIST_FILE = Empty/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bsidesoft.ios.Empty;
