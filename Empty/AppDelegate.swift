@@ -14,9 +14,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		router["sub1"] = {Sub1()}
 		router["sub2"] = {Sub2()}
 		window = w
-		let base = UINavigationController() //UIViewController()
+		let base = UINavigationController() // UIViewController()
 		w.rootViewController = base
-		router.route(base, Router.type.replace).with("main")
+		router.route(base, .replace, "replace").with("main")
+        router.route(base, .cover, "sub1").with("sub1")
+        router.route(base, .cover, "sub2").with("sub2")
+
 		w.makeKeyAndVisible()
 
         test_Module()

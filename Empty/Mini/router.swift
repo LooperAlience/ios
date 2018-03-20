@@ -13,11 +13,12 @@ class Router{
 	typealias ctrl = ()->UIViewController
 	public enum type{case add, replace, cover}
 	class Routed{
-		let router:Router, base:UIViewController, type:Router.type
-		init(_ r:Router, _ b:UIViewController, _ ty:Router.type){
+        let router:Router, base:UIViewController, type:Router.type, key: String?
+        init(_ r:Router, _ b:UIViewController, _ ty:Router.type, _ k: String?){
 			router = r
 			base = b
 			type = ty
+            key = k
 		}
 		func with(_ k:String){
 			if let f = router[k] {
@@ -35,7 +36,11 @@ class Router{
 //            if let base = base as? UINavigationController{
 //            }else if let base = base as? UITabBarController{
 //            }else{
-				base.pushRouter(c, type)
+            let idx = base.pushRouter(c, type)
+            if let key = key {
+                router.keys[key] = idx
+            }
+
 //            }
 		}
 	}
@@ -43,6 +48,7 @@ class Router{
 	static private var router = NSMutableDictionary()
 	
 	private let table = NSMutableDictionary()
+    let keys = NSMutableDictionary()
 	
 	static func get(_ key:String)->Router?{
 		return Router.router[key] as? Router
@@ -53,8 +59,19 @@ class Router{
 	subscript(key:String)->ctrl?{
 		get{return table[key] as? ctrl}
 		set{table[key] = newValue}
-	}	
-	func route(_ c:UIViewController, _ t:Router.type)->Routed{
-		return Routed(self, c, t)
 	}
+
+//    router.route(base, Router.type.replace, "????"<-- 이렇게 온다.).with("main")
+    func route(_ c:UIViewController, _ t:Router.type, _ k: String?)->Routed{
+		return Routed(self, c, t, k)
+	}
+
+    func pop(_ c: UIViewController) {
+        c.popRouter()
+    }
+
+    func remove(_ c: UIViewController, _ k: String) {
+        guard let idx = keys[k] as? Int else { return }
+        c.removeRouter(idx)
+    }
 }
