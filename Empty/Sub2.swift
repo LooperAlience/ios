@@ -18,9 +18,21 @@ class Sub2: UIViewController {
 		btn.frame = CGRect(x:50, y:100, width:150, height:30)
 		btn.setTitle("sub2 button", for: UIControlState.normal)
 		btn.center = CGPoint(x:self.view.frame.size.width / 2, y:100)
-		btn.addTarget(.touchUpInside){
-			Router.get("main")?.route(self.parent!, Router.type.replace).with("main")
+		btn.addTarget(.touchUpInside){ [unowned self] in
+//            Router.get("main")?.route(self.parent!, Router.type.replace, nil).with("main")
+            Router.get("main")?.pop(self.parent!)
 		}
 		view.addSubview(btn)
 	}
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.view.frame = UIScreen.main.bounds
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("Sub2 viewWillAppear")
+
+    }
 }
