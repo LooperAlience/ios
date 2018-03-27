@@ -9,9 +9,31 @@
 import Foundation
 import UIKit
 
+extension UINavigationController {
+    static private let ctrlStack = NSMutableDictionary()
+
+    var coverControllers: NSMutableArray {
+
+        let stack = (UINavigationController.ctrlStack[hash] as? NSMutableArray) ?? NSMutableArray.init()
+        UINavigationController.ctrlStack[hash] = stack
+        return stack
+
+    }
+
+}
+
 extension UIViewController{
 
 	static private let navStack = NSMutableDictionary()
+
+    static private let parents = NSMutableDictionary()
+    var _parent: UIViewController? {
+        get { return UIViewController.parents[hash] as? UIViewController }
+        set { UIViewController.parents[hash] = newValue }
+    }
+    var container: UIViewController? {
+        return parent ?? _parent
+    }
 
     @discardableResult
 	func pushRouter(_ c: UIViewController, _ type: Router.type) -> Int {
@@ -49,16 +71,12 @@ extension UIViewController{
             }
 
             if let nv = self as? UINavigationController {
-                nv.viewControllers.last?.addChildViewController(c)
-//                addChildViewController(c)
-//                nv.viewControllers = nv.viewControllers + [c]
-                nv.viewControllers.last?.view?.addSubview(c.view)
+                nv.coverControllers.add(c)
+                c._parent = nv
             } else {
                 addChildViewController(c)
-                view.addSubview(c.view)
             }
-
-
+            view.addSubview(c.view)
 
         }
 
@@ -72,12 +90,12 @@ extension UIViewController{
 
 	func popRouter(){
 
-        let stack = (UIViewController.navStack[hash] as? NSMutableArray) ?? NSMutableArray.init()
+        guard let stack = UIViewController.navStack[hash] as? NSMutableArray else { return }
         guard let c = stack.lastObject as? UIViewController else { return }
 
-        stack.remove(c)
+        stack.removeLastObject()
         let type = stack.lastObject as! Router.type
-        stack.remove(type)
+        stack.removeLastObject()
 
         if case .cover = type, let last = stack.lastObject as? UIViewController {
             last.viewWillAppear(false)
@@ -85,7 +103,14 @@ extension UIViewController{
 
         switch (self) {
         case (let base as UINavigationController):
-            base.viewControllers = base.viewControllers.dropLast() + []
+            if case .cover = type {
+                c.view.removeFromSuperview()
+                base.coverControllers.removeLastObject()
+                c._parent = nil
+            } else {
+                base.viewControllers = base.viewControllers.dropLast() + []
+            }
+
         default:
             c.removeFromParentViewController()
             c.view.removeFromSuperview()
