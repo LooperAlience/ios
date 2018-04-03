@@ -24,22 +24,27 @@ extension UINavigationController {
 
 extension UIViewController{
 
-	static private let navStack = NSMutableDictionary()
+    static private let vms = NSMutableDictionary()
 
-    static private let parents = NSMutableDictionary()
-    var _parent: UIViewController? {
-        get { return UIViewController.parents[hash] as? UIViewController }
-        set { UIViewController.parents[hash] = newValue }
+    var vm: VM {
+        let clsName = "\(self)"
+        if UIViewController.vms[clsName] == nil {
+            UIViewController.vms[clsName] = VM(self)
+            self.initVM()
+        }
+        return UIViewController.vms[clsName] as! VM
     }
-    var container: UIViewController? {
-        return parent ?? _parent
+
+
+    /// [Abstract]
+    @objc
+    func initVM() {
     }
 
     @discardableResult
 	func pushRouter(_ c: UIViewController, _ type: Router.type) -> Int {
 
-        let stack = (UIViewController.navStack[hash] as? NSMutableArray) ?? NSMutableArray.init()
-        UIViewController.navStack[hash] = stack
+        let stack = vm.navStack
 
         if case .replace = type {
             stack.removeLastObject()
@@ -72,7 +77,7 @@ extension UIViewController{
 
             if let nv = self as? UINavigationController {
                 nv.coverControllers.add(c)
-                c._parent = nv
+                c.vm.parent = nv
             } else {
                 addChildViewController(c)
             }
@@ -90,7 +95,7 @@ extension UIViewController{
 
 	func popRouter(){
 
-        guard let stack = UIViewController.navStack[hash] as? NSMutableArray else { return }
+        let stack = vm.navStack
         guard let c = stack.lastObject as? UIViewController else { return }
 
         stack.removeLastObject()
@@ -106,7 +111,7 @@ extension UIViewController{
             if case .cover = type {
                 c.view.removeFromSuperview()
                 base.coverControllers.removeLastObject()
-                c._parent = nil
+                c.vm.parent = nil
             } else {
                 base.viewControllers = base.viewControllers.dropLast() + []
             }
@@ -120,7 +125,7 @@ extension UIViewController{
 
     func removeRouter(_ idx: Int) {
 
-        guard let stack = UIViewController.navStack[hash] as? NSMutableArray else { return }
+        let stack = vm.navStack
         guard stack.count > idx else { return }
 
         var isCover = false
