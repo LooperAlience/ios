@@ -13,20 +13,31 @@ class Test:NSObject{
 }
 class Main: UIViewController {
 
-    class M {
-        let title = "main button"
+    @objc(MainM)class M: NSObject, NSCoding {
+        let title: String
+
+        init(title: String) {
+            self.title = title
+        }
+        required init(coder decoder: NSCoder) {
+            self.title = decoder.decodeObject(forKey: "title") as? String ?? ""
+        }
+
+        func encode(with coder: NSCoder) {
+            coder.encode(title, forKey: "title")
+        }
     }
 
     @objc
     override func initVM() {
         if !vm.load() {
             vm["title"] = "main button 3490583409"
-            vm["btn1"] = {
-                Router.get("main")?.route(self.parent!, Router.type.replace, nil).with("sub1")
-            } as UIControl.listener
-            vm["m"] = M()
+            vm["m"] = M.init(title: "main button")
             vm.save()
         }
+        vm["btn1"] = {
+            Router.get("main")?.route(self.parent!, Router.type.replace, nil).with("sub1")
+        } as UIControl.listener
     }
 
     override func viewDidLoad() {
@@ -38,7 +49,7 @@ class Main: UIViewController {
 		btn.frame = CGRect(x:50, y:100, width:150, height:30)
 		btn.setTitle(m.title, for: UIControlState.normal)
 		btn.center = CGPoint(x:self.view.frame.size.width / 2, y:100)
-		btn.addTarget(.touchUpInside, vm.listener("btn1")!)
+        btn.addTarget(.touchUpInside, vm.listener("btn1")!)
 		view.addSubview(btn)
 //        Router.get("main")?.route(self.parent!, .cover, nil).with("sub1")
     }

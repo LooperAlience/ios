@@ -36,13 +36,14 @@ class VM: NSObject {
     func listener(_ k: String) -> UIControl.listener? { return prop(k) }
 
     func save() {
-        UserDefaults.setValue(
+        UserDefaults.standard.setValue(
             NSKeyedArchiver.archivedData(withRootObject: dic),
             forKey: VM.KEY
         )
+        UserDefaults.standard.synchronize()
     }
     func load() -> Bool {
-        guard let data = UserDefaults.value(forKey: VM.KEY) as? Data else { return false }
+        guard let data = UserDefaults.standard.value(forKey: VM.KEY) as? Data else { return false }
         dic = NSKeyedUnarchiver.unarchiveObject(with: data) as! NSMutableDictionary
         return true
     }
