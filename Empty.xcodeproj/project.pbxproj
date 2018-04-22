@@ -12,11 +12,10 @@
 		3E2C354A204C543C00A8E2CF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E2C3548204C543C00A8E2CF /* LaunchScreen.storyboard */; };
 		3E2C3553204C569100A8E2CF /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2C3551204C569100A8E2CF /* Main.swift */; };
 		3E2C3554204C569100A8E2CF /* Main.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E2C3552204C569100A8E2CF /* Main.xib */; };
-		3E2C3556204C570B00A8E2CF /* view.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2C3555204C570B00A8E2CF /* view.swift */; };
 		3E2C355F20544CE400A8E2CF /* Sub1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2C355E20544CE400A8E2CF /* Sub1.swift */; };
 		3E2C356120544CF100A8E2CF /* Sub2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2C356020544CF100A8E2CF /* Sub2.swift */; };
+		A619A0EB20862DFF003958A6 /* view.swift in Sources */ = {isa = PBXBuildFile; fileRef = A619A0E920862B0B003958A6 /* view.swift */; };
 		A61F39A12073B18A005DD0C1 /* VM.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61F39A02073B18A005DD0C1 /* VM.swift */; };
-		A6A5C8C52060A1ED0058C03F /* Mini.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A5C8C22060A1ED0058C03F /* Mini.swift */; };
 		A6A5C8C62060A1ED0058C03F /* controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A5C8C32060A1ED0058C03F /* controller.swift */; };
 		A6A5C8C72060A1ED0058C03F /* router.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A5C8C42060A1ED0058C03F /* router.swift */; };
 		A6A5C8CD2060A2340058C03F /* TestView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6A5C8C92060A2340058C03F /* TestView.xib */; };
@@ -24,6 +23,7 @@
 		A6A5C8CF2060A2340058C03F /* TestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A5C8CB2060A2340058C03F /* TestVC.swift */; };
 		A6A5C8D02060A2340058C03F /* TestVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6A5C8CC2060A2340058C03F /* TestVC.xib */; };
 		A6A5C8D42060A28A0058C03F /* UINib.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A5C8D32060A28A0058C03F /* UINib.swift */; };
+		A6AEB5FA20862FF90031A86B /* Chela.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6AEB5F920862FF90031A86B /* Chela.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,11 +34,10 @@
 		3E2C354B204C543C00A8E2CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3E2C3551204C569100A8E2CF /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
 		3E2C3552204C569100A8E2CF /* Main.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Main.xib; sourceTree = "<group>"; };
-		3E2C3555204C570B00A8E2CF /* view.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = view.swift; sourceTree = "<group>"; };
 		3E2C355E20544CE400A8E2CF /* Sub1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sub1.swift; sourceTree = "<group>"; };
 		3E2C356020544CF100A8E2CF /* Sub2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sub2.swift; sourceTree = "<group>"; };
+		A619A0E920862B0B003958A6 /* view.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = view.swift; sourceTree = "<group>"; };
 		A61F39A02073B18A005DD0C1 /* VM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VM.swift; sourceTree = "<group>"; };
-		A6A5C8C22060A1ED0058C03F /* Mini.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mini.swift; sourceTree = "<group>"; };
 		A6A5C8C32060A1ED0058C03F /* controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = controller.swift; sourceTree = "<group>"; };
 		A6A5C8C42060A1ED0058C03F /* router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = router.swift; sourceTree = "<group>"; };
 		A6A5C8C92060A2340058C03F /* TestView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestView.xib; sourceTree = "<group>"; };
@@ -46,6 +45,7 @@
 		A6A5C8CB2060A2340058C03F /* TestVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestVC.swift; sourceTree = "<group>"; };
 		A6A5C8CC2060A2340058C03F /* TestVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestVC.xib; sourceTree = "<group>"; };
 		A6A5C8D32060A28A0058C03F /* UINib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UINib.swift; sourceTree = "<group>"; };
+		A6AEB5F920862FF90031A86B /* Chela.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chela.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,13 +80,12 @@
 			children = (
 				A6A5C8D22060A28A0058C03F /* Extensions */,
 				A6A5C8C82060A2340058C03F /* Views */,
-				A6A5C8C12060A1ED0058C03F /* Mini */,
+				A6A5C8C12060A1ED0058C03F /* Chela */,
 				3E2C353F204C543C00A8E2CF /* AppDelegate.swift */,
 				3E2C3546204C543C00A8E2CF /* Assets.xcassets */,
 				3E2C3548204C543C00A8E2CF /* LaunchScreen.storyboard */,
 				3E2C354B204C543C00A8E2CF /* Info.plist */,
 				3E2C3551204C569100A8E2CF /* Main.swift */,
-				3E2C3555204C570B00A8E2CF /* view.swift */,
 				3E2C3552204C569100A8E2CF /* Main.xib */,
 				3E2C355E20544CE400A8E2CF /* Sub1.swift */,
 				3E2C356020544CF100A8E2CF /* Sub2.swift */,
@@ -94,15 +93,16 @@
 			path = Empty;
 			sourceTree = "<group>";
 		};
-		A6A5C8C12060A1ED0058C03F /* Mini */ = {
+		A6A5C8C12060A1ED0058C03F /* Chela */ = {
 			isa = PBXGroup;
 			children = (
-				A6A5C8C22060A1ED0058C03F /* Mini.swift */,
 				A6A5C8C32060A1ED0058C03F /* controller.swift */,
 				A6A5C8C42060A1ED0058C03F /* router.swift */,
 				A61F39A02073B18A005DD0C1 /* VM.swift */,
+				A619A0E920862B0B003958A6 /* view.swift */,
+				A6AEB5F920862FF90031A86B /* Chela.swift */,
 			);
-			path = Mini;
+			path = Chela;
 			sourceTree = "<group>";
 		};
 		A6A5C8C82060A2340058C03F /* Views */ = {
@@ -198,13 +198,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A619A0EB20862DFF003958A6 /* view.swift in Sources */,
 				A6A5C8CF2060A2340058C03F /* TestVC.swift in Sources */,
 				A6A5C8C72060A1ED0058C03F /* router.swift in Sources */,
 				A61F39A12073B18A005DD0C1 /* VM.swift in Sources */,
-				A6A5C8C52060A1ED0058C03F /* Mini.swift in Sources */,
+				A6AEB5FA20862FF90031A86B /* Chela.swift in Sources */,
 				3E2C3553204C569100A8E2CF /* Main.swift in Sources */,
 				3E2C356120544CF100A8E2CF /* Sub2.swift in Sources */,
-				3E2C3556204C570B00A8E2CF /* view.swift in Sources */,
 				3E2C355F20544CE400A8E2CF /* Sub1.swift in Sources */,
 				A6A5C8CE2060A2340058C03F /* TestView.swift in Sources */,
 				A6A5C8C62060A1ED0058C03F /* controller.swift in Sources */,
