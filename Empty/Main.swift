@@ -8,6 +8,16 @@
 
 import UIKit
 
+class a {
+    func click() {
+        print("clicked")
+    }
+}
+
+func test() {
+    print("click2")
+}
+
 class Main: UIViewController {
 
     @objc
@@ -24,13 +34,22 @@ class Main: UIViewController {
     override func viewDidLoad() {
 
         super.viewDidLoad()
-		self.view.backgroundColor = UIColor.brown
-		let btn = UIButton(type: UIButtonType.system)
-		btn.frame = CGRect(x:50, y:100, width:150, height:30)
-		btn.setTitle(vm.str("title"), for: UIControlState.normal)
-		btn.center = CGPoint(x:self.view.frame.size.width / 2, y:100)
-        btn.addTarget(.touchUpInside, vm.listener("btn1")!)
-		view.addSubview(btn)
+        let bind = DataBinding.of(DataBinding.loadXib("Test"))
+
+        view.addSubview(bind.view)
+        
+        bind["a"] = a().click
+        bind.execute()
+
+
+
+//        self.view.backgroundColor = UIColor.brown
+//        let btn = UIButton(type: UIButtonType.system)
+//        btn.frame = CGRect(x:50, y:100, width:150, height:30)
+//        btn.setTitle(vm.str("title"), for: UIControlState.normal)
+//        btn.center = CGPoint(x:self.view.frame.size.width / 2, y:100)
+//        btn.addTarget(.touchUpInside, vm.listener("btn1")!)
+//        view.addSubview(btn)
 //        Router.get("main")?.route(self.parent!, .cover, nil).with("sub1")
     }
 }

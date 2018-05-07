@@ -24,6 +24,7 @@
 		A6A5C8D02060A2340058C03F /* TestVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6A5C8CC2060A2340058C03F /* TestVC.xib */; };
 		A6A5C8D42060A28A0058C03F /* UINib.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6A5C8D32060A28A0058C03F /* UINib.swift */; };
 		A6AEB5FA20862FF90031A86B /* Chela.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6AEB5F920862FF90031A86B /* Chela.swift */; };
+		A6C441C120989957005E5860 /* Test.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6C441C020989957005E5860 /* Test.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		A6A5C8CC2060A2340058C03F /* TestVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestVC.xib; sourceTree = "<group>"; };
 		A6A5C8D32060A28A0058C03F /* UINib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UINib.swift; sourceTree = "<group>"; };
 		A6AEB5F920862FF90031A86B /* Chela.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chela.swift; sourceTree = "<group>"; };
+		A6C441C020989957005E5860 /* Test.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Test.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 				3E2C3548204C543C00A8E2CF /* LaunchScreen.storyboard */,
 				3E2C354B204C543C00A8E2CF /* Info.plist */,
 				3E2C3551204C569100A8E2CF /* Main.swift */,
+				A6C441C020989957005E5860 /* Test.xib */,
 				3E2C3552204C569100A8E2CF /* Main.xib */,
 				3E2C355E20544CE400A8E2CF /* Sub1.swift */,
 				3E2C356020544CF100A8E2CF /* Sub2.swift */,
@@ -184,6 +187,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A6A5C8CD2060A2340058C03F /* TestView.xib in Resources */,
+				A6C441C120989957005E5860 /* Test.xib in Resources */,
 				3E2C354A204C543C00A8E2CF /* LaunchScreen.storyboard in Resources */,
 				A6A5C8D02060A2340058C03F /* TestVC.xib in Resources */,
 				3E2C3554204C569100A8E2CF /* Main.xib in Resources */,
