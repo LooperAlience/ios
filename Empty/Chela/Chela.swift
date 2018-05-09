@@ -70,15 +70,15 @@ class DataBinding {
 
     private var kv = [String: Any]()
     private var keys = Set<String>.init()
-    private var events = [UIView: [String: String]]()
-    private var props  = [UIView: [String: String]]()
+    private var events = [UIView: [String: Any]]()
+    private var props  = [UIView: [String: Any]]()
     func addKey(_ k: String) {
         keys.insert(k)
     }
-    func addEvent(_ v: UIView, _ e: [String: String]) {
+    func addEvent(_ v: UIView, _ e: [String: Any]) {
         events[v] = e
     }
-    func addProp(_ v: UIView, _ p: [String: String]) {
+    func addProp(_ v: UIView, _ p: [String: Any]) {
         props[v] = p
     }
 
@@ -90,46 +90,54 @@ class DataBinding {
         }
     }
 
-    private func parseVal(_ v: String) -> Any? {
+    private func parseVal(_ v: Any) -> Any? {
 //        ["정말 들어가나?", "normal"]
 //        { "key1": "val1", "key2": 54345 }
 //        "string", true, false, 1234
+        if let v = v as? String {
 
-        switch v {
-        case "true":  return true
-        case "false": return false
-        case let s where s.first == "\"":
-            return String(s.dropFirst().dropLast())
-        case let s where s.isInt:
-            return Int(s)!
-        case let s where s.isFloat:
-            return Float(s)!
-        case let s where s.first == "[":
-            return String(s.dropFirst().dropLast())
-                .split(separator: ",")
-                .map { parseVal($0.trimmingCharacters(in: .whitespaces)) }
-        case let s where s.first == "{":
-            return String(s.dropFirst().dropLast())
-                .split(separator: ",")
-                .map { $0.trimmingCharacters(in: .whitespaces).split(separator: ":") }
-                .reduce(NSMutableDictionary()) { (accu, curr) in
-                    accu[String(curr[0]).trim] = parseVal(String(curr[1]).trim)
-                    return accu
-                }
-
-        default:
-            if v.contains(".") {
-                let t = v.split(separator: ".")
-                let field = String(t.last!)
-                let target = kv[String(t.first!)]
-                // TODO: 미러 완성해보자.
-                for child in Mirror.init(reflecting: target!).children {
-                    if child.label == field {
-                        return child.value
+            switch v {
+            case "true":  return true
+            case "false": return false
+            case let s where s.first == "\"":
+                return String(s.dropFirst().dropLast())
+            case let s where s.isInt:
+                return Int(s)!
+            case let s where s.isFloat:
+                return Float(s)!
+            case let s where s.first == "[":
+                return String(s.dropFirst().dropLast())
+                    .split(separator: ",")
+                    .map { parseVal($0.trimmingCharacters(in: .whitespaces)) }
+            case let s where s.first == "{":
+                return String(s.dropFirst().dropLast())
+                    .split(separator: ",")
+                    .map { $0.trimmingCharacters(in: .whitespaces).split(separator: ":") }
+                    .reduce(NSMutableDictionary()) { (accu, curr) in
+                        accu[String(curr[0]).trim] = parseVal(String(curr[1]).trim)
+                        return accu
                     }
+            default: return "(unknown)"  // 이리 떨어지면 안된다.
+            }
+
+        } else {
+
+            if let val = v as? VAL {
+                let k = val.key
+                if k.contains(".") {
+                    let t = k.split(separator: ".")
+                    let field = String(t.last!)
+                    let target = kv[String(t.first!)]
+                    // TODO: 미러 완성해보자.
+                    for child in Mirror.init(reflecting: target!).children {
+                        if child.label == field {
+                            return child.value
+                        }
+                    }
+                } else {
+                    return kv[k]
                 }
-            } else {
-                return kv[v]
+
             }
 
             return v
@@ -231,67 +239,85 @@ class DataBinding {
         }
 
     }
+
+    struct VAL {
+        let key: String
+    }
+
+    private static func _parser(_ v: String, _ arr: NSMutableArray) -> Any {
+
+//        title:["정말 들어가나?", "normal"]
+        switch v {
+        case "true":  return true
+        case "false": return false
+        case let s where s.first == "\"":
+            return String(s.dropFirst().dropLast())
+        case let s where s.isInt:
+            return Int(s)!
+        case let s where s.isFloat:
+            return Float(s)!
+        case let s where s.first == "@" && s.last == "@":
+            let i = String(s.dropFirst().dropLast())
+            let v = arr[Int(i)!] as! String
+            switch v {
+            case let s where s.first == "[":
+                return String(s.dropFirst().dropLast())
+                    .split(separator: ",")
+                    .map { _parser(String($0).trim, arr) }
+            case let s where s.first == "{":
+                print(s)
+                return String(s.dropFirst().dropLast()) // title:["정말 들어가나?", "normal"]
+                    .split(separator: ",")
+                    .map { String($0).trim.split(separator: ":") }
+                    .reduce(NSMutableDictionary()) { (accu, curr) in
+                        accu[String(curr[0]).trim] = _parser(String(curr[1]).trim, arr)
+                        return accu
+                }
+            default: return ""
+            }
+
+        case let s where "[{".contains(s.first!):
+
+            let pattern = "\\{[^\\{\\}\\[\\]]*\\}|\\[[^\\{\\}\\[\\]]*\\]"
+            let regx = try! NSRegularExpression(pattern: pattern)
+
+            var v = s
+
+            while 0 < regx.numberOfMatches(in: v, range: NSRange(v.startIndex..., in: v)) {
+                v = regx.matches(in: v, range: NSRange(v.startIndex..., in: v))
+                    .reversed()
+                    .reduce(NSMutableString.init(string: v)) { (accu, curr) -> NSMutableString in
+                        arr.add(accu.substring(with: curr.range))
+                        accu.replaceCharacters(in: curr.range, with: "@\(arr.count - 1)@")
+                        return accu
+                    } as String
+            }
+
+            return _parser(v, arr)
+
+        default:
+            return VAL.init(key: v)
+        }
+
+    }
+
     // 이 녀석이 완전체 JSON parser여야 한다.
     private static func parse(_ v: UIView, _ t: Type, _ s: String, _ binding: inout DataBinding) {
 
-//        switch v {
-//        case "true":  return true
-//        case "false": return false
-//        case let s where s.first == "\"":
-//            return String(s.dropFirst().dropLast())
-//        case let s where s.isInt:
-//            return Int(s)!
-//        case let s where s.isFloat:
-//            return Float(s)!
-//        case let s where s.first == "[":
-//            return String(s.dropFirst().dropLast())
-//                .split(separator: ",")
-//                .map { parseVal($0.trimmingCharacters(in: .whitespaces)) }
-//        case let s where s.first == "{":
-//            return String(s.dropFirst().dropLast())
-//                .split(separator: ",")
-//                .map { $0.trimmingCharacters(in: .whitespaces).split(separator: ":") }
-//                .reduce(NSMutableDictionary()) { (accu, curr) in
-//                    accu[String(curr[0]).trim] = parseVal(String(curr[1]).trim)
-//                    return accu
-//            }
-//
-//        default:
-//            if v.contains(".") {
-//                let t = v.split(separator: ".")
-//                let field = String(t.last!)
-//                let target = kv[String(t.first!)]
-//                // TODO: 미러 완성해보자.
-//                for child in Mirror.init(reflecting: target!).children {
-//                    if child.label == field {
-//                        return child.value
-//                    }
-//                }
-//            } else {
-//                return kv[v]
-//            }
-//
-//            return v
-//        }
+        var dic = [String: Any]()
+        (_parser("{\(s)}", NSMutableArray()) as? NSMutableDictionary)?.forEach {
+            guard case let (k as String, v) = $0 else { return }
+            dic[k] = v
+            if let v = v as? VAL {
 
-        var dic = [String: String]()
-        for v in s.split(separator: ",").map ({ (s) -> (String, String) in
+                var valKey = v.key
+                if v.key.contains(".") {
+                    valKey = v.key.split(separator: ".").first! + ""
+                }
+                binding.addKey(valKey)
 
-            let seq = s.trimmingCharacters(in: .whitespaces).split(separator: ":")
-            let key = seq.first!.trimmingCharacters(in: .whitespaces)
-            let val = seq.last!.trimmingCharacters(in: .whitespaces)
-
-            var valKey = val
-            if val.contains(".") {
-                valKey = val.split(separator: ".").first! + ""
             }
 
-            binding.addKey(valKey)
-
-            return (key, val)
-
-        }) {
-            dic[v.0] = v.1
         }
 
         switch t {
