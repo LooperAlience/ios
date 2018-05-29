@@ -342,7 +342,7 @@ class DataBinding {
 
                 // nib
                 if type.hasSuffix(".xib") {
-                    target = loadXib(type, isXibCache)
+                    target = loadXib(type.replacingOccurrences(of: ".xib", with: ""), isXibCache)
                 } else if let cls = NSClassFromString(type) as? UIView.Type {
                     target = cls.init()
                 } else {
