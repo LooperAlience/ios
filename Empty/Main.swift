@@ -34,7 +34,7 @@ class Main: UIViewController {
     override func viewDidLoad() {
 
         super.viewDidLoad()
-        let bind = DataBinding.of(DataBinding.loadXib("Test"))
+        let bind = DataBinding.of(DataBinding.loadXib("Stage"))
 
         view.addSubview(bind.view)
         
