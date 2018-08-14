@@ -15,6 +15,8 @@
 		3E2C356120544CF100A8E2CF /* Sub2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2C356020544CF100A8E2CF /* Sub2.swift */; };
 		A619A0EB20862DFF003958A6 /* view.swift in Sources */ = {isa = PBXBuildFile; fileRef = A619A0E920862B0B003958A6 /* view.swift */; };
 		A61F39A12073B18A005DD0C1 /* VM.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61F39A02073B18A005DD0C1 /* VM.swift */; };
+		A655504620FD542F002C7826 /* ChelaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A655504520FD542F002C7826 /* ChelaModel.swift */; };
+		A66126F72122F7E300696BE7 /* ChType.m in Sources */ = {isa = PBXBuildFile; fileRef = A66126F62122F7E300696BE7 /* ChType.m */; };
 		A695684D20AC5E9200EC867F /* Main2.xib in Resources */ = {isa = PBXBuildFile; fileRef = A695684C20AC5E9200EC867F /* Main2.xib */; };
 		A695684F20AC5F0300EC867F /* Stage.xib in Resources */ = {isa = PBXBuildFile; fileRef = A695684E20AC5F0300EC867F /* Stage.xib */; };
 		A695685220AC645500EC867F /* Net.swift in Sources */ = {isa = PBXBuildFile; fileRef = A695685120AC645500EC867F /* Net.swift */; };
@@ -41,6 +43,10 @@
 		3E2C356020544CF100A8E2CF /* Sub2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sub2.swift; sourceTree = "<group>"; };
 		A619A0E920862B0B003958A6 /* view.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = view.swift; sourceTree = "<group>"; };
 		A61F39A02073B18A005DD0C1 /* VM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VM.swift; sourceTree = "<group>"; };
+		A655504520FD542F002C7826 /* ChelaModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChelaModel.swift; sourceTree = "<group>"; };
+		A66126F52122F7E300696BE7 /* Empty-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Empty-Bridging-Header.h"; sourceTree = "<group>"; };
+		A66126F62122F7E300696BE7 /* ChType.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChType.m; sourceTree = "<group>"; };
+		A66126F82122F80C00696BE7 /* ChType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChType.h; sourceTree = "<group>"; };
 		A695684C20AC5E9200EC867F /* Main2.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Main2.xib; sourceTree = "<group>"; };
 		A695684E20AC5F0300EC867F /* Stage.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Stage.xib; sourceTree = "<group>"; };
 		A695685120AC645500EC867F /* Net.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Net.swift; sourceTree = "<group>"; };
@@ -86,6 +92,7 @@
 		3E2C353E204C543C00A8E2CF /* Empty */ = {
 			isa = PBXGroup;
 			children = (
+				A66126F42122F78900696BE7 /* Type */,
 				A6A5C8D22060A28A0058C03F /* Extensions */,
 				A6A5C8C82060A2340058C03F /* Views */,
 				A6A5C8C12060A1ED0058C03F /* Chela */,
@@ -101,6 +108,16 @@
 				3E2C356020544CF100A8E2CF /* Sub2.swift */,
 			);
 			path = Empty;
+			sourceTree = "<group>";
+		};
+		A66126F42122F78900696BE7 /* Type */ = {
+			isa = PBXGroup;
+			children = (
+				A66126F82122F80C00696BE7 /* ChType.h */,
+				A66126F62122F7E300696BE7 /* ChType.m */,
+				A66126F52122F7E300696BE7 /* Empty-Bridging-Header.h */,
+			);
+			path = Type;
 			sourceTree = "<group>";
 		};
 		A695685020AC617D00EC867F /* Comp */ = {
@@ -121,6 +138,7 @@
 				A6AEB5F920862FF90031A86B /* Chela.swift */,
 				A695685120AC645500EC867F /* Net.swift */,
 				A695685520AC708600EC867F /* Vali.swift */,
+				A655504520FD542F002C7826 /* ChelaModel.swift */,
 			);
 			path = Chela;
 			sourceTree = "<group>";
@@ -176,6 +194,7 @@
 				TargetAttributes = {
 					3E2C353B204C543C00A8E2CF = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 0940;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -220,6 +239,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A66126F72122F7E300696BE7 /* ChType.m in Sources */,
+				A655504620FD542F002C7826 /* ChelaModel.swift in Sources */,
 				A619A0EB20862DFF003958A6 /* view.swift in Sources */,
 				A6A5C8CF2060A2340058C03F /* TestVC.swift in Sources */,
 				A695685220AC645500EC867F /* Net.swift in Sources */,
@@ -366,12 +387,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5M2GQ2DR6P;
 				INFOPLIST_FILE = Empty/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bsidesoft.ios.Empty;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Empty/Type/Empty-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -381,12 +405,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5M2GQ2DR6P;
 				INFOPLIST_FILE = Empty/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bsidesoft.ios.Empty;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Empty/Type/Empty-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -7,7 +7,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	var window: UIWindow?
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-
+        ChType.parse("@abcd://", nil)
+        ChType.parse("@b<ssdf>://", nil)
 		let w = UIWindow()
 		w.backgroundColor = UIColor.white
 		let router = Router("main")
