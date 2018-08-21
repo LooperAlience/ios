@@ -8,14 +8,14 @@
 #import <Foundation/Foundation.h>
 
 @interface ChType: NSObject
-+ (BOOL)isSameNumber:(NSNumber *)a :(NSNumber *)b;
-+ (id)PARSE:(id)o :(NSString *)subT;
-+ (NSDictionary *)parseMAP:(NSString *)v;
-+ (NSArray<NSString *> *)parseSArr:(NSString *)v;
-+ (NSArray *)parseArr:(NSString *)v;
-+ (ChType *)IS:(id)v;
-+ (id)GET:(id)container key:(NSString *)k;
-+ (id)SET:(id)container key:(NSString *)k val:(id)v;
++ (BOOL)isSameNumber:(nonnull NSNumber *)a :(nonnull NSNumber *)b;
++ (nullable id)parse:(nonnull id)o :(nullable NSString *)subT;
++ (nullable NSDictionary *)parseMAP:(nonnull NSString *)v;
++ (nullable NSArray<NSString *> *)parseSArr:(nonnull NSString *)v;
++ (nullable NSArray *)parseArr:(nonnull NSString *)v;
++ (nullable ChType *)is:(nullable id)v;
++ (nullable id)get:(nonnull id)container key:(nonnull NSString *)k;
++ (nullable id)set:(nonnull id)container key:(nonnull NSString *)k val:(nullable id)v;
 - (BOOL)isValue;
 - (BOOL)is:(id)v;
 - (NSString *)schema;

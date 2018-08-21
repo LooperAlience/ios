@@ -56,10 +56,10 @@ static NSDictionary *schemeType;
     schemeType = @{ b.schema: b };
 }
 
-+ (BOOL)isSameNumber:(NSNumber *)a :(NSNumber *)b {
++ (BOOL)isSameNumber:(nonnull NSNumber *)a :(nonnull NSNumber *)b {
     return NO;
 }
-+ (id)PARSE:(id)o :(NSString *)subT {
++ (nullable id)parse:(nonnull id)o :(nullable NSString *)subT {
     [self INIT];
     if(![o isKindOfClass:NSString.class]) return o;
     NSString *v = o;
@@ -68,7 +68,7 @@ static NSDictionary *schemeType;
     if([v characterAtIndex:1] == '{') return o;
     NSInteger i = [v indexOf:@"://"];
     if (i == -1) return v;
-    NSString *header = [v substringWithRange:NSMakeRange(1, i)];
+    NSString *header = [v substringWithRange:NSMakeRange(1, i - 1)];
     NSInteger subSep = [header indexOf:@"<"];
     NSString *noSub = subSep == -1 ? header : [header substringToIndex:subSep];
     NSInteger infoSep = [noSub indexOf:@"["];
@@ -79,31 +79,64 @@ static NSDictionary *schemeType;
     NSLog(@"type := %@, o := %@", type, r);
 
     if(!r) return v;
-//    [r _parse];
 
+    return [r _parse:(subSep == -1 ? nil : [header substringWithRange:NSMakeRange(subSep + 1, header.length - (subSep + 1))])
+                    :infoSep == -1 ? nil : [self parseArr:[noSub substringWithRange:NSMakeRange(infoSep, noSub.length - infoSep)]]
+                    :[v substringFromIndex:i + 3]];
+}
 
-
-
-
++ (nullable NSDictionary *)parseMAP:(nonnull NSString *)v {
+    id ret;
+    if ((ret = [NSJSONSerialization JSONObjectWithData:[v dataUsingEncoding:NSUTF8StringEncoding]
+                                               options:NSJSONReadingMutableContainers
+                                                 error:NULL]) && [ret isKindOfClass:NSDictionary.class]) {
+        return ret;
+    }
     return nil;
 }
-+ (NSDictionary *)parseMAP:(NSString *)v {
++ (nullable NSArray<NSString *> *)parseSArr:(nonnull NSString *)v {
+    id ret;
+    if ((ret = [NSJSONSerialization JSONObjectWithData:[v dataUsingEncoding:NSUTF8StringEncoding]
+                                               options:NSJSONReadingMutableContainers
+                                                 error:NULL]) && [ret isKindOfClass:NSArray.class]) {
+        NSArray *_ret = ret;
+        NSMutableArray *array = [NSMutableArray init];
+        for (id item in _ret) {
+            id t = [self parse:item :nil];
+            ChType *type = [self is:t];
+            [array addObject:type == nil ? @"" : [type castS:t]];
+        }
+        return ret;
+    }
     return nil;
 }
-+ (NSArray<NSString *> *)parseSArr:(NSString *)v {
++ (nullable NSArray *)parseArr:(nonnull NSString *)v {
+    id ret;
+    if ((ret = [NSJSONSerialization JSONObjectWithData:[v dataUsingEncoding:NSUTF8StringEncoding]
+                                               options:NSJSONReadingMutableContainers
+                                                 error:NULL]) && [ret isKindOfClass:NSArray.class]) {
+        NSArray *_ret = ret;
+        NSMutableArray *array = [NSMutableArray init];
+        for (id o in _ret) {
+            id parsed;
+            if (!!(parsed = [self parse:o :nil])) [array addObject:parsed];
+        }
+        return ret;
+    }
     return nil;
 }
-+ (NSArray *)parseArr:(NSString *)v {
++ (nullable ChType *)is:(nullable id)v {
+    if (!v) return nil;
+    for (ChType *type in schemeType.allValues) {
+        if ([type is:v]) return type;
+    }
     return nil;
 }
-+ (ChType *)IS:(id)v {
-    return nil;
++ (nullable id)get:(nonnull id)container key:(nonnull NSString *)k {
+    return [[self is:container] get:container key:k];
 }
-+ (id)GET:(id)container key:(NSString *)k {
-    return nil;
-}
-+ (id)SET:(id)container key:(NSString *)k val:(id)v {
-    return nil;
++ (nullable id)set:(nonnull id)container key:(nonnull NSString *)k val:(nullable id)v {
+    return [[self is:container] set:container key:k val:v];
 }
 - (BOOL)isValue {
     return NO;
