@@ -35,12 +35,120 @@
 @interface B: ChType
 @end
 @implementation B
-- (NSString *)schema {
-    return @"b";
+- (nonnull NSString *)schema { return @"b"; }
+- (BOOL)isValue { return YES; }
+- (BOOL)is:(id)v {
+    if ([v isKindOfClass:NSNumber.class]) {
+        NSNumber *num = v;
+        return CFGetTypeID((__bridge CFTypeRef)(num)) == CFBooleanGetTypeID();
+    }
+    return NO;
 }
+- (id)_fromS:(NSString *)v { return [@"true" isEqualToString:v] ? @YES : @NO; }
+- (id)_fromN:(NSNumber *)v { return [@0 compare:v] == NSOrderedSame ? @NO: @YES; }
+- (BOOL)isSame:(id)a :(id)b { return [a boolValue] == [b boolValue]; }
 @end
 
 
+//        kCFNumberSInt8Type = 1,
+//        kCFNumberSInt16Type = 2,
+//        kCFNumberSInt32Type = 3,
+//        kCFNumberSInt64Type = 4,
+//        kCFNumberFloat32Type = 5,
+//        kCFNumberFloat64Type = 6,    /* 64-bit IEEE 754 */
+//        /* Basic C types */
+//        kCFNumberCharType = 7,
+//        kCFNumberShortType = 8,
+//        kCFNumberIntType = 9,
+//        kCFNumberLongType = 10,
+//        kCFNumberLongLongType = 11,
+//        kCFNumberFloatType = 12,
+//        kCFNumberDoubleType = 13,
+
+@interface I8: ChType
+@end
+@implementation I8
+- (nonnull NSString *)schema { return @"i8"; }
+- (BOOL)isValue { return YES; }
+- (BOOL)is:(id)v { return [v isKindOfClass:NSNumber.class] && CFNumberGetType((__bridge CFNumberRef)((NSNumber *)v)) == 1; }
+- (id)_fromS:(NSString *)v { return @(v.integerValue); }
+- (id)_fromN:(NSNumber *)v { return @(v.integerValue); }
+- (BOOL)isSame:(id)a :(id)b { return [a integerValue] == [b integerValue]; }
+@end
+
+@interface I16: ChType
+@end
+@implementation I16
+- (nonnull NSString *)schema { return @"i16"; }
+- (BOOL)isValue { return YES; }
+- (BOOL)is:(id)v { return [v isKindOfClass:NSNumber.class] && CFNumberGetType((__bridge CFNumberRef)((NSNumber *)v)) == 2; }
+- (id)_fromS:(NSString *)v { return @(v.integerValue); }
+- (id)_fromN:(NSNumber *)v { return @(v.integerValue); }
+- (BOOL)isSame:(id)a :(id)b { return [a integerValue] == [b integerValue]; }
+@end
+
+@interface I32: ChType
+@end
+@implementation I32
+- (nonnull NSString *)schema { return @"i32"; }
+- (BOOL)isValue { return YES; }
+- (BOOL)is:(id)v { return [v isKindOfClass:NSNumber.class] && CFNumberGetType((__bridge CFNumberRef)((NSNumber *)v)) == 3; }
+- (id)_fromS:(NSString *)v { return @(v.integerValue); }
+- (id)_fromN:(NSNumber *)v { return @(v.integerValue); }
+- (BOOL)isSame:(id)a :(id)b { return [a integerValue] == [b integerValue]; }
+@end
+
+@interface I64: ChType
+@end
+@implementation I64
+- (nonnull NSString *)schema { return @"i64"; }
+- (BOOL)isValue { return YES; }
+- (BOOL)is:(id)v { return [v isKindOfClass:NSNumber.class] && CFNumberGetType((__bridge CFNumberRef)((NSNumber *)v)) == 4; }
+- (id)_fromS:(NSString *)v { return @(v.integerValue); }
+- (id)_fromN:(NSNumber *)v { return @(v.integerValue); }
+- (BOOL)isSame:(id)a :(id)b { return [a integerValue] == [b integerValue]; }
+@end
+
+static double epsilon32 = 0.000000001;
+
+@interface F32: ChType
+@end
+@implementation F32
+- (nonnull NSString *)schema { return @"f32"; }
+- (BOOL)isValue { return YES; }
+- (BOOL)is:(id)v { return [v isKindOfClass:NSNumber.class] && CFNumberGetType((__bridge CFNumberRef)((NSNumber *)v)) == 5; }
+- (id)_fromS:(NSString *)v { return @(v.floatValue); }
+- (id)_fromN:(NSNumber *)v { return @(v.floatValue); }
+- (BOOL)isSame:(id)a :(id)b {
+    return fabsf([a floatValue] - [b floatValue]) < epsilon32;
+}
+@end
+
+static double epsilon64 = 0.000000001;
+
+@interface F64: ChType
+@end
+@implementation F64
+- (nonnull NSString *)schema { return @"f64"; }
+- (BOOL)isValue { return YES; }
+- (BOOL)is:(id)v { return [v isKindOfClass:NSNumber.class] && CFNumberGetType((__bridge CFNumberRef)((NSNumber *)v)) == 6; }
+- (id)_fromS:(NSString *)v { return @(v.doubleValue); }
+- (id)_fromN:(NSNumber *)v { return @(v.doubleValue); }
+- (BOOL)isSame:(id)a :(id)b {
+    return fabs([a doubleValue] - [b doubleValue]) < epsilon64;
+}
+@end
+
+@interface F80: ChType
+@end
+@implementation F80
+- (nonnull NSString *)schema { return @"f80"; }
+- (BOOL)isValue { return YES; }
+- (BOOL)is:(id)v { return [v isKindOfClass:NSNumber.class] && CFNumberGetType((__bridge CFNumberRef)((NSNumber *)v)) == 6; }
+- (id)_fromS:(NSString *)v { return @(v.floatValue); }
+- (id)_fromN:(NSNumber *)v { return @(v.floatValue); }
+- (BOOL)isSame:(id)a :(id)b { return [a floatValue] == [b floatValue]; }
+@end
 
 @interface ChType()
 @end
@@ -48,13 +156,44 @@
 @implementation ChType
 static BOOL isInited;
 static B *b;
+static I8 *i8;
+static I16 *i16;
+static I32 *i32;
+static I64 *i64;
+static F32 *f32;
+static F64 *f64;
+static F80 *f80;
 static NSDictionary *schemeType;
 + (void)INIT {
     if(isInited) return;
     isInited = YES;
-    b = [B new];
-    schemeType = @{ b.schema: b };
+    b   = [B new];
+    i8  = [I8 new];
+    i16 = [I16 new];
+    i32 = [I32 new];
+    i64 = [I64 new];
+    f32 = [F32 new];
+    f64 = [F64 new];
+    f80 = [F80 new];
+    schemeType = @{
+       b.schema: b,
+       i8.schema: i8,
+       i16.schema: i16,
+       i32.schema: i32,
+       i64.schema: i64,
+       f32.schema: f32,
+       f64.schema: f64,
+       f80.schema: f80
+   };
 }
++ (nonnull ChType *)B   { return b; }
++ (nonnull ChType *)I8  { return i8; }
++ (nonnull ChType *)I16 { return i16; }
++ (nonnull ChType *)I32 { return i32; }
++ (nonnull ChType *)I64 { return i64; }
++ (nonnull ChType *)F32 { return f32; }
++ (nonnull ChType *)F64 { return f64; }
++ (nonnull ChType *)F80 { return f80; }
 
 + (BOOL)isSameNumber:(nonnull NSNumber *)a :(nonnull NSNumber *)b {
     return NO;
@@ -147,14 +286,14 @@ static NSDictionary *schemeType;
 - (NSString *)schema {
     return nil;
 }
-- (id)_fromS:(NSString *)v {
+- (nullable id)_fromS:(nonnull NSString *)v {
+    return [ChType parse:v :nil];
+}
+- (nullable id)_fromN:(NSNumber *)v {
     return nil;
 }
-- (id)_fromN:(NSNumber *)v {
-    return nil;
-}
-- (id)_parse:(NSString *)subType :(NSArray *)info :(NSString *)body {
-    return nil;
+- (nullable id)_parse:(NSString *)subType :(NSArray *)info :(NSString *)body {
+    return [self _fromS:body];
 }
 - (void)_item:(id)container :(NSMutableArray *)list {
 
