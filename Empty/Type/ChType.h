@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 
 @interface ChType: NSObject
++ (nonnull ChType *)EMPTY;
 + (nonnull ChType *)B;
 + (nonnull ChType *)I8;
 + (nonnull ChType *)I16;
@@ -16,6 +17,8 @@
 + (nonnull ChType *)F32;
 + (nonnull ChType *)F64;
 + (nonnull ChType *)F80;
++ (nonnull ChType *)MAP;
++ (nonnull ChType *)LIST;
 + (BOOL)isSameNumber:(nonnull NSNumber *)a :(nonnull NSNumber *)b;
 + (nullable id)parse:(nonnull id)o :(nullable NSString *)subT;
 + (nullable NSDictionary *)parseMAP:(nonnull NSString *)v;

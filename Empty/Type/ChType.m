@@ -31,6 +31,21 @@
 }
 @end
 
+//+ (nonnull ChType *)EMPTY;
+@interface EMPTY: ChType
+@end
+@implementation EMPTY
+- (nonnull NSString *)schema { return @"empty"; }
+- (BOOL)isValue { return YES; }
+- (BOOL)is:(id)v {
+    ChType *ch = v;
+    return [ch isKindOfClass:ChType.class] && [ch.schema isEqualToString:@"empty"];
+}
+- (id)_fromS:(NSString *)v { return ChType.EMPTY; }
+- (id)_fromN:(NSNumber *)v { return ChType.EMPTY; }
+- (BOOL)isSame:(id)a :(id)b { return [self is:a] && [self is:b]; }
+@end
+
 
 @interface B: ChType
 @end
@@ -49,31 +64,15 @@
 - (BOOL)isSame:(id)a :(id)b { return [a boolValue] == [b boolValue]; }
 @end
 
-
-//        kCFNumberSInt8Type = 1,
-//        kCFNumberSInt16Type = 2,
-//        kCFNumberSInt32Type = 3,
-//        kCFNumberSInt64Type = 4,
-//        kCFNumberFloat32Type = 5,
-//        kCFNumberFloat64Type = 6,    /* 64-bit IEEE 754 */
-//        /* Basic C types */
-//        kCFNumberCharType = 7,
-//        kCFNumberShortType = 8,
-//        kCFNumberIntType = 9,
-//        kCFNumberLongType = 10,
-//        kCFNumberLongLongType = 11,
-//        kCFNumberFloatType = 12,
-//        kCFNumberDoubleType = 13,
-
 @interface I8: ChType
 @end
 @implementation I8
 - (nonnull NSString *)schema { return @"i8"; }
 - (BOOL)isValue { return YES; }
 - (BOOL)is:(id)v { return [v isKindOfClass:NSNumber.class] && CFNumberGetType((__bridge CFNumberRef)((NSNumber *)v)) == 1; }
-- (id)_fromS:(NSString *)v { return @(v.integerValue); }
-- (id)_fromN:(NSNumber *)v { return @(v.integerValue); }
-- (BOOL)isSame:(id)a :(id)b { return [a integerValue] == [b integerValue]; }
+- (id)_fromS:(NSString *)v { return [[NSNumber alloc] initWithChar:v.integerValue]; }
+- (id)_fromN:(NSNumber *)v { return @(v.charValue); }
+- (BOOL)isSame:(id)a :(id)b { return [a charValue] == [b charValue]; }
 @end
 
 @interface I16: ChType
@@ -82,9 +81,9 @@
 - (nonnull NSString *)schema { return @"i16"; }
 - (BOOL)isValue { return YES; }
 - (BOOL)is:(id)v { return [v isKindOfClass:NSNumber.class] && CFNumberGetType((__bridge CFNumberRef)((NSNumber *)v)) == 2; }
-- (id)_fromS:(NSString *)v { return @(v.integerValue); }
-- (id)_fromN:(NSNumber *)v { return @(v.integerValue); }
-- (BOOL)isSame:(id)a :(id)b { return [a integerValue] == [b integerValue]; }
+- (id)_fromS:(NSString *)v { return [[NSNumber alloc] initWithShort:v.integerValue]; }
+- (id)_fromN:(NSNumber *)v { return @(v.shortValue); }
+- (BOOL)isSame:(id)a :(id)b { return [a shortValue] == [b shortValue]; }
 @end
 
 @interface I32: ChType
@@ -93,8 +92,8 @@
 - (nonnull NSString *)schema { return @"i32"; }
 - (BOOL)isValue { return YES; }
 - (BOOL)is:(id)v { return [v isKindOfClass:NSNumber.class] && CFNumberGetType((__bridge CFNumberRef)((NSNumber *)v)) == 3; }
-- (id)_fromS:(NSString *)v { return @(v.integerValue); }
-- (id)_fromN:(NSNumber *)v { return @(v.integerValue); }
+- (id)_fromS:(NSString *)v { return [[NSNumber alloc] initWithInt:(int)v.integerValue]; }
+- (id)_fromN:(NSNumber *)v { return [[NSNumber alloc] initWithInt:(int)v.integerValue]; }
 - (BOOL)isSame:(id)a :(id)b { return [a integerValue] == [b integerValue]; }
 @end
 
@@ -150,11 +149,50 @@ static double epsilon64 = 0.000000001;
 - (BOOL)isSame:(id)a :(id)b { return [a floatValue] == [b floatValue]; }
 @end
 
+@interface MAP: ChType
+@end
+@implementation MAP
+- (nonnull NSString *)schema { return @"map"; } //map://{k:parse,k:parse,...}
+- (BOOL)isValue { return NO; }
+- (BOOL)is:(id)v { return [v isKindOfClass:NSDictionary.class]; }
+- (id)_parse:(NSString *)subType :(NSArray *)info :(NSString *)body {
+    return [ChType parseMAP:body];
+}
+- (id)get:(id)container key:(NSString *)k {
+    return ((NSDictionary *)container)[k];
+}
+- (id)set:(id)container key:(NSString *)k val:(id)v {
+    NSMutableDictionary *dic = container;
+    [dic setObject:v forKey:k];
+    return container;
+}
+@end
+
+@interface LIST: ChType
+@end
+@implementation LIST
+- (nonnull NSString *)schema { return @"list"; } //list://[1, 1.5, true, "abc"]
+- (BOOL)isValue { return NO; }
+- (BOOL)is:(id)v { return [v isKindOfClass:NSArray.class]; }
+- (id)_parse:(NSString *)subType :(NSArray *)info :(NSString *)body {
+    return [ChType parseArr:body];
+}
+- (id)get:(id)container key:(NSString *)k {
+    return ((NSArray *)container)[k.integerValue];
+}
+- (id)set:(id)container key:(NSString *)k val:(id)v {
+    NSMutableArray *array = container;
+    array[k.integerValue] = v;
+    return container;
+}
+@end
+
 @interface ChType()
 @end
 
 @implementation ChType
 static BOOL isInited;
+static EMPTY *empty;
 static B *b;
 static I8 *i8;
 static I16 *i16;
@@ -163,19 +201,25 @@ static I64 *i64;
 static F32 *f32;
 static F64 *f64;
 static F80 *f80;
+static MAP *map;
+static LIST *list;
 static NSDictionary *schemeType;
 + (void)INIT {
     if(isInited) return;
     isInited = YES;
-    b   = [B new];
-    i8  = [I8 new];
-    i16 = [I16 new];
-    i32 = [I32 new];
-    i64 = [I64 new];
-    f32 = [F32 new];
-    f64 = [F64 new];
-    f80 = [F80 new];
+    empty = [EMPTY new];
+    b     = [B new];
+    i8    = [I8 new];
+    i16   = [I16 new];
+    i32   = [I32 new];
+    i64   = [I64 new];
+    f32   = [F32 new];
+    f64   = [F64 new];
+    f80   = [F80 new];
+    map   = [MAP new];
+    list  = [LIST new];
     schemeType = @{
+       empty.schema: empty,
        b.schema: b,
        i8.schema: i8,
        i16.schema: i16,
@@ -183,17 +227,22 @@ static NSDictionary *schemeType;
        i64.schema: i64,
        f32.schema: f32,
        f64.schema: f64,
-       f80.schema: f80
+       f80.schema: f80,
+       map.schema: map,
+       list.schema: list
    };
 }
-+ (nonnull ChType *)B   { return b; }
-+ (nonnull ChType *)I8  { return i8; }
-+ (nonnull ChType *)I16 { return i16; }
-+ (nonnull ChType *)I32 { return i32; }
-+ (nonnull ChType *)I64 { return i64; }
-+ (nonnull ChType *)F32 { return f32; }
-+ (nonnull ChType *)F64 { return f64; }
-+ (nonnull ChType *)F80 { return f80; }
++ (nonnull ChType *)EMPTY { return empty; }
++ (nonnull ChType *)B     { return b; }
++ (nonnull ChType *)I8    { return i8; }
++ (nonnull ChType *)I16   { return i16; }
++ (nonnull ChType *)I32   { return i32; }
++ (nonnull ChType *)I64   { return i64; }
++ (nonnull ChType *)F32   { return f32; }
++ (nonnull ChType *)F64   { return f64; }
++ (nonnull ChType *)F80   { return f80; }
++ (nonnull ChType *)MAP   { return map; }
++ (nonnull ChType *)LIST  { return list; }
 
 + (BOOL)isSameNumber:(nonnull NSNumber *)a :(nonnull NSNumber *)b {
     return NO;
@@ -225,11 +274,17 @@ static NSDictionary *schemeType;
 }
 
 + (nullable NSDictionary *)parseMAP:(nonnull NSString *)v {
+
     id ret;
     if ((ret = [NSJSONSerialization JSONObjectWithData:[v dataUsingEncoding:NSUTF8StringEncoding]
                                                options:NSJSONReadingMutableContainers
                                                  error:NULL]) && [ret isKindOfClass:NSDictionary.class]) {
-        return ret;
+        NSMutableDictionary *dic = ret;
+        for (NSString *key in dic.allKeys) {
+            dic[key] = [ChType parse:dic[key] :nil];
+        }
+
+        return dic;
     }
     return nil;
 }
@@ -239,7 +294,7 @@ static NSDictionary *schemeType;
                                                options:NSJSONReadingMutableContainers
                                                  error:NULL]) && [ret isKindOfClass:NSArray.class]) {
         NSArray *_ret = ret;
-        NSMutableArray *array = [NSMutableArray init];
+        NSMutableArray *array = [[NSMutableArray alloc] init];
         for (id item in _ret) {
             id t = [self parse:item :nil];
             ChType *type = [self is:t];
@@ -255,7 +310,7 @@ static NSDictionary *schemeType;
                                                options:NSJSONReadingMutableContainers
                                                  error:NULL]) && [ret isKindOfClass:NSArray.class]) {
         NSArray *_ret = ret;
-        NSMutableArray *array = [NSMutableArray init];
+        NSMutableArray *array = [[NSMutableArray alloc] init];
         for (id o in _ret) {
             id parsed;
             if (!!(parsed = [self parse:o :nil])) [array addObject:parsed];

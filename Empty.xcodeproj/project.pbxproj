@@ -13,6 +13,10 @@
 		3E2C3553204C569100A8E2CF /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2C3551204C569100A8E2CF /* Main.swift */; };
 		3E2C355F20544CE400A8E2CF /* Sub1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2C355E20544CE400A8E2CF /* Sub1.swift */; };
 		3E2C356120544CF100A8E2CF /* Sub2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2C356020544CF100A8E2CF /* Sub2.swift */; };
+		A60B4D9721357F4300A56C43 /* ChMap.m in Sources */ = {isa = PBXBuildFile; fileRef = A60B4D9621357F4300A56C43 /* ChMap.m */; };
+		A60B4D9E213EB64900A56C43 /* Ch.m in Sources */ = {isa = PBXBuildFile; fileRef = A60B4D9D213EB64900A56C43 /* Ch.m */; };
+		A61136362147EAB400706A08 /* ChLifecycleObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = A61136352147EAB400706A08 /* ChLifecycleObserver.m */; };
+		A61136392147F19400706A08 /* ChLooper.m in Sources */ = {isa = PBXBuildFile; fileRef = A61136382147F19400706A08 /* ChLooper.m */; };
 		A619A0EB20862DFF003958A6 /* view.swift in Sources */ = {isa = PBXBuildFile; fileRef = A619A0E920862B0B003958A6 /* view.swift */; };
 		A61F39A12073B18A005DD0C1 /* VM.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61F39A02073B18A005DD0C1 /* VM.swift */; };
 		A655504620FD542F002C7826 /* ChelaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A655504520FD542F002C7826 /* ChelaModel.swift */; };
@@ -41,6 +45,14 @@
 		3E2C3551204C569100A8E2CF /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
 		3E2C355E20544CE400A8E2CF /* Sub1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sub1.swift; sourceTree = "<group>"; };
 		3E2C356020544CF100A8E2CF /* Sub2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sub2.swift; sourceTree = "<group>"; };
+		A60B4D9521357F4300A56C43 /* ChMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChMap.h; sourceTree = "<group>"; };
+		A60B4D9621357F4300A56C43 /* ChMap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChMap.m; sourceTree = "<group>"; };
+		A60B4D9C213EB64900A56C43 /* Ch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Ch.h; sourceTree = "<group>"; };
+		A60B4D9D213EB64900A56C43 /* Ch.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Ch.m; sourceTree = "<group>"; };
+		A61136342147EAB400706A08 /* ChLifecycleObserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChLifecycleObserver.h; sourceTree = "<group>"; };
+		A61136352147EAB400706A08 /* ChLifecycleObserver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChLifecycleObserver.m; sourceTree = "<group>"; };
+		A61136372147F19400706A08 /* ChLooper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChLooper.h; sourceTree = "<group>"; };
+		A61136382147F19400706A08 /* ChLooper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChLooper.m; sourceTree = "<group>"; };
 		A619A0E920862B0B003958A6 /* view.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = view.swift; sourceTree = "<group>"; };
 		A61F39A02073B18A005DD0C1 /* VM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VM.swift; sourceTree = "<group>"; };
 		A655504520FD542F002C7826 /* ChelaModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChelaModel.swift; sourceTree = "<group>"; };
@@ -92,6 +104,7 @@
 		3E2C353E204C543C00A8E2CF /* Empty */ = {
 			isa = PBXGroup;
 			children = (
+				A61136332147EA7B00706A08 /* MV */,
 				A66126F42122F78900696BE7 /* Type */,
 				A6A5C8D22060A28A0058C03F /* Extensions */,
 				A6A5C8C82060A2340058C03F /* Views */,
@@ -106,8 +119,21 @@
 				A695684E20AC5F0300EC867F /* Stage.xib */,
 				3E2C355E20544CE400A8E2CF /* Sub1.swift */,
 				3E2C356020544CF100A8E2CF /* Sub2.swift */,
+				A60B4D9C213EB64900A56C43 /* Ch.h */,
+				A60B4D9D213EB64900A56C43 /* Ch.m */,
 			);
 			path = Empty;
+			sourceTree = "<group>";
+		};
+		A61136332147EA7B00706A08 /* MV */ = {
+			isa = PBXGroup;
+			children = (
+				A61136342147EAB400706A08 /* ChLifecycleObserver.h */,
+				A61136352147EAB400706A08 /* ChLifecycleObserver.m */,
+				A61136372147F19400706A08 /* ChLooper.h */,
+				A61136382147F19400706A08 /* ChLooper.m */,
+			);
+			path = MV;
 			sourceTree = "<group>";
 		};
 		A66126F42122F78900696BE7 /* Type */ = {
@@ -115,6 +141,8 @@
 			children = (
 				A66126F82122F80C00696BE7 /* ChType.h */,
 				A66126F62122F7E300696BE7 /* ChType.m */,
+				A60B4D9521357F4300A56C43 /* ChMap.h */,
+				A60B4D9621357F4300A56C43 /* ChMap.m */,
 				A66126F52122F7E300696BE7 /* Empty-Bridging-Header.h */,
 			);
 			path = Type;
@@ -240,12 +268,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				A66126F72122F7E300696BE7 /* ChType.m in Sources */,
+				A60B4D9721357F4300A56C43 /* ChMap.m in Sources */,
 				A655504620FD542F002C7826 /* ChelaModel.swift in Sources */,
 				A619A0EB20862DFF003958A6 /* view.swift in Sources */,
 				A6A5C8CF2060A2340058C03F /* TestVC.swift in Sources */,
+				A61136392147F19400706A08 /* ChLooper.m in Sources */,
 				A695685220AC645500EC867F /* Net.swift in Sources */,
 				A6A5C8C72060A1ED0058C03F /* router.swift in Sources */,
+				A61136362147EAB400706A08 /* ChLifecycleObserver.m in Sources */,
 				A61F39A12073B18A005DD0C1 /* VM.swift in Sources */,
+				A60B4D9E213EB64900A56C43 /* Ch.m in Sources */,
 				A6AEB5FA20862FF90031A86B /* Chela.swift in Sources */,
 				3E2C3553204C569100A8E2CF /* Main.swift in Sources */,
 				3E2C356120544CF100A8E2CF /* Sub2.swift in Sources */,

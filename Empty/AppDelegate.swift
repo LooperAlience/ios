@@ -64,29 +64,132 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("F32 \(v6):\(ret == v6) \(t == ChType.f32())")
         }
 
+//        let v7: Dictionary = [ ]
+        ret = ChType.parse("""
+            @map://{
+                "a":3,"b":1.5,"c":true,"d": "abc",
+                "i0": "@i8://1", "i1": "@i16://2", "i2": "@i32://3", "i3": "@i64://4",
+                "f0": "@f32://1.5", "f1": "@f64://2.5",
+                "map": "@map://{\\"a\\": 3}"
+            }
+            """, nil)
+        t = ChType.is(ret)
+        if let ret = ret as? Dictionary<String, Any>, let t = t as? ChType {
+            let map = (ret["map"] as! Dictionary<String, Any>)["a"] as! Int
+            print("MAP:\(t == ChType.map())")
+            print("""
+                ret.a: 3==\(ret["a"]!) \(3 == ret["a"] as! Int)
+                ret.b: 1.5==\(ret["b"]!) \(1.5 == ret["b"] as! Float)
+                ret.c: true==\(ret["c"]!) \(ChType.is(ret["c"]!) == ChType.b() && ret["c"] as! Bool),
+                ret.d: "abc"=="\(ret["d"]!)" \("abc" == ret["d"] as! String)
+                ret.i0: 1==\(ret["i0"]!) \(ChType.is(ret["i0"]!) == ChType.i8()) \(ChType.is(ret["i0"]!)) && \(1 == ret["i0"] as! Int8)
+                ret.i1: 2==\(ret["i1"]!) \(ChType.is(ret["i1"]!) == ChType.i16()) \(ChType.is(ret["i1"]!)) && \(2 == ret["i1"] as! Int16)
+                ret.i2: 3==\(ret["i2"]!) \(ChType.is(ret["i2"]!) == ChType.i32()) \(ChType.is(ret["i2"]!)) && \(3 == ret["i2"] as! Int32)
+                ret.i3: 4==\(ret["i3"]!) \(ChType.is(ret["i3"]!) == ChType.i64()) \(ChType.is(ret["i3"]!)) && \(4 == ret["i3"] as! Int64)
+                ret.f0: 1.5==\(ret["f0"]!) \(ChType.is(ret["f0"]!) == ChType.f32()) \(ChType.is(ret["f0"]!)) && \(1.5 == ret["f0"] as! Float32)
+                ret.f1: 2.5==\(ret["f1"]!) \(ChType.is(ret["f1"]!) == ChType.f64()) \(ChType.is(ret["f1"]!)) && \(2.5 == ret["f1"] as! Float64)
+                ret.map.a: 3==\(map) \(ChType.is(map) == ChType.i64()) \(ChType.is(map)) && \(3 == map)
+            """)
+        }
 
+        ret = ChType.parse("""
+            @list://[1, 1.5, true, "abc"]
+            """, nil)
+        t = ChType.is(ret)
+        if let ret = ret as? Array<Any>, let t = t as? ChType {
+            print("LIST:\(t == ChType.list())")
+            print("""
+                ret.0: 1==\(ret[0]) \(1 == ret[0] as! Int)
+                ret.1: 1.5==\(ret[1]) \(1.5 == ret[1] as! Float)
+                ret.2: true==\(ret[2]) \(ChType.is(ret[2]) == ChType.b() && ret[2] as! Bool),
+                ret.3: "abc"=="\(ret[3])" \("abc" == ret[3] as! String)
+            """)
+        }
 
-//        ret = ChType.parse("@i://123456789012345", nil)
-//        t = ChType.is(123456789012345)
-//        if let ret = ret as? Int64, let t = t as? ChType {
-//            print("I i64:\(ret == 123456789012345) \(t == ChType.i())")
-//        }
-//
-//        ret = ChType.parse("@f://3.14", nil)
-//        t = ChType.is(3.14)
-//        if let ret = ret as? Float, let t = t as? ChType {
-//            print("F :\(ret == 3.14) \(t == ChType.f())")
-//        }
-//
-//        ret = ChType.parse("@f://3.141278398569236", nil)
-//        t = ChType.is(3.141278398569236)
-//        if let ret = ret as? Float80, let t = t as? ChType {
-//            print("F f64:\(ret == 3.141278398569236) \(t == ChType.f()) \(ret)")
-//        }
-//
-//        var a: Float64 = 3.1
-//
-//        print("\(ChType.is(a) == ChType.f())")
+        let map = ChMap.init()
+        map.set("a", ret!)
+           .set("b", """
+                    @map://{"a": 3, "b": "abc"}
+                    """)
+           .set("c", "@{b}")
+           .set("d", "@{c.b}")
+
+        if let ret = map.get("a.0") as? Int {
+            print("ChMap:")
+            print("""
+                ret.0: 1==\(ret) \(1 == ret)
+                """)
+        }
+
+        if let ret = map.get("b.a") as? Int {
+            print("ChMap:")
+            print("""
+                ret.b.a: 3==\(ret) \(3 == ret)
+                """)
+        }
+
+        if let ret = map.get("b.b") as? String {
+            print("ChMap:")
+            print("""
+                ret.b.b: abc==\(ret) \("abc" == ret)
+                """)
+        }
+
+        if let ret = map.get("c.b") as? String {
+            print("ChMap:")
+            print("""
+                ret.c.b: abc==\(ret) \("abc" == ret)
+                """)
+        }
+
+        if let ret = map.get("d") as? String {
+            print("ChMap:")
+            print("""
+                ret.d: abc==\(ret) \("abc" == ret)
+                """)
+        }
+
+        Ch.set("a", ret!)
+        Ch.set("b", """
+                    @map://{"a": 3, "b": "abc"}
+                    """)
+        Ch.set("c", "@{b}")
+        Ch.set("d", "@{c.b}")
+
+        if let ret = Ch.get("a.0") as? Int {
+            print("Ch:")
+            print("""
+                ret.0: 1==\(ret) \(1 == ret)
+                """)
+        }
+
+        if let ret = Ch.get("b.a") as? Int {
+            print("Ch:")
+            print("""
+                ret.b.a: 3==\(ret) \(3 == ret)
+                """)
+        }
+
+        if let ret = Ch.get("b.b") as? String {
+            print("Ch:")
+            print("""
+                ret.b.b: abc==\(ret) \("abc" == ret)
+                """)
+        }
+
+        if let ret = Ch.get("c.b") as? String {
+            print("Ch:")
+            print("""
+                ret.c.b: abc==\(ret) \("abc" == ret)
+                """)
+        }
+
+        if let ret = Ch.s("d") {
+            print("Ch:")
+            print("""
+                ret.d: abc==\(ret) \("abc" == ret)
+                """)
+        }
 
 		let w = UIWindow()
 		w.backgroundColor = UIColor.white
@@ -103,6 +206,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		w.makeKeyAndVisible()
 
+        let red = UIView.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 50))
+        red.backgroundColor = UIColor.red
+        window?.addSubview(red)
+        let looper1 = ChLooper.init(red)
+        window?.addSubview(looper1)
+
+
 		return true
 	}
+}
+
+extension Ch {
+    class func s(_ str: String) -> String? {
+        return Ch.get(str) as? String
+    }
+//    class func s(_ args: CVarArgType...) -> Any {
+//        getVaList(args)
+//    }
 }
