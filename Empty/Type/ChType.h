@@ -8,6 +8,17 @@
 #import <Foundation/Foundation.h>
 
 @interface ChType: NSObject
++ (nonnull ChType *)EMPTY;
++ (nonnull ChType *)B;
++ (nonnull ChType *)I8;
++ (nonnull ChType *)I16;
++ (nonnull ChType *)I32;
++ (nonnull ChType *)I64;
++ (nonnull ChType *)F32;
++ (nonnull ChType *)F64;
++ (nonnull ChType *)F80;
++ (nonnull ChType *)MAP;
++ (nonnull ChType *)LIST;
 + (BOOL)isSameNumber:(nonnull NSNumber *)a :(nonnull NSNumber *)b;
 + (nullable id)parse:(nonnull id)o :(nullable NSString *)subT;
 + (nullable NSDictionary *)parseMAP:(nonnull NSString *)v;
@@ -18,10 +29,10 @@
 + (nullable id)set:(nonnull id)container key:(nonnull NSString *)k val:(nullable id)v;
 - (BOOL)isValue;
 - (BOOL)is:(id)v;
-- (NSString *)schema;
-- (id)_fromS:(NSString *)v;
-- (id)_fromN:(NSNumber *)v;
-- (id)_parse:(NSString *)subType :(NSArray *)info :(NSString *)body;
+- (nonnull NSString *)schema;
+- (nullable id)_fromS:(nonnull NSString *)v;
+- (nullable id)_fromN:(NSNumber *)v;
+- (nullable id)_parse:(NSString *)subType :(NSArray *)info :(NSString *)body;
 - (void)_item:(id)container :(NSMutableArray *)list;
 - (NSMutableArray *)list:(id)container;
 - (id)get:(id)container key:(NSString *)k;
