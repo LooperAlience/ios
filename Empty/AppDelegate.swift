@@ -206,12 +206,67 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		w.makeKeyAndVisible()
 
-        let red = UIView.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 50))
-        red.backgroundColor = UIColor.red
-        window?.addSubview(red)
-        let looper1 = ChLooper.init(red)
+        let looper1 = ChLooper.init()
         window?.addSubview(looper1)
 
+        let sW = UIScreen.main.bounds.size.width
+        let sH = UIScreen.main.bounds.size.height
+        let halfW = Double(sW / 2)
+        let halfH = Double(sH / 2)
+
+        let start = Date.timeIntervalSinceReferenceDate
+
+        for _ in 1...1000 {
+
+            var x: CGFloat; var y: CGFloat
+            switch Int.random(in: 0...3) {
+            case 0: x = 0; y = CGFloat.random(in: 0...sH)
+            case 1: x = sW; y = CGFloat.random(in: 0...sH)
+            case 2: y = 0; x = CGFloat.random(in: 0...sW)
+            default:
+                y = sH; x = CGFloat.random(in: 0...sW)
+            }
+
+            let size = CGFloat.random(in: 3...8.0)
+            let r = CGFloat.random(in: 0.3...0.7)
+            let g = CGFloat.random(in: 0.3...0.7)
+            let b = CGFloat.random(in: 0.3...0.7)
+
+            let dot = UIView.init(
+                frame: CGRect.init(
+                    origin: CGPoint.init(x: sW / 2 , y: sH / 2),
+                    size: CGSize.init(width: size, height: size)
+                )
+            )
+            dot.backgroundColor = UIColor.init(red: r, green: g, blue: b, alpha: 1)
+            dot.layer.cornerRadius = size / 2
+            window?.addSubview(dot)
+
+            let delay = Double.random(in: 0...3)
+            let term = Double.random(in: 0.7...1.5)
+
+            looper1.add("적당히", { (curr, ani) -> Bool in
+//                print(ani.rate)
+                let w = ChType.f64().castD(dot.superview?.frame.width)
+                if ani.rate == 1 {
+                    dot.frame = CGRect.init(origin: CGPoint.init(x: x, y: y), size: dot.frame.size)
+                } else if w > 0.0 {
+                    dot.frame = CGRect.init(
+                        origin: CGPoint.init(x: ani.sineOut(halfW, Double(x)), y: ani.sineOut(halfH, Double(y))),
+                        size: dot.frame.size
+                    )
+                }
+                return false
+            }, Int(start + delay), term, start + delay + term, -1, nil)
+
+        }
+
+
+
+        var person = Person.init(name: "kkkk", age: 32)
+        let name = person.kang
+        person.kang = "klsajfhasjkdf"
+        print(person.kang)
 
 		return true
 	}
@@ -224,4 +279,23 @@ extension Ch {
 //    class func s(_ args: CVarArgType...) -> Any {
 //        getVaList(args)
 //    }
+}
+
+@dynamicMemberLookup
+struct Person {
+    var name: String
+    var age: Int
+}
+
+extension Person {
+    subscript(dynamicMember member: String) -> String {
+        get {
+            return member == "kang" ? name : "<unknown>"
+        }
+        set(newValue) {
+            if member == "kang" {
+                name = newValue
+            }
+        }
+    }
 }

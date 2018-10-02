@@ -369,13 +369,32 @@ static NSDictionary *schemeType;
     return nil;
 }
 - (NSInteger)castI:(id)v {
-    return 0;
+    if ([v isKindOfClass:NSString.self]) {
+        return [[self _fromS:(NSString *)v] integerValue];
+    } else if ([v isKindOfClass:NSNumber.self]) {
+        return [[self _fromN:(NSNumber *)v] integerValue];
+    } else if ([self is:v]) {
+        return [v integerValue];
+    } else {
+        exit(1);
+        return 0;
+    }
 }
 - (float)castF:(id)v {
     return 0;
 }
 - (double)castD:(id)v {
-    return 0;
+
+    if ([v isKindOfClass:NSString.self]) {
+        return [[self _fromS:(NSString *)v] doubleValue];
+    } else if ([v isKindOfClass:NSNumber.self]) {
+        return [[self _fromN:(NSNumber *)v] doubleValue];
+    } else if ([self is:v]) {
+        return [v doubleValue];
+    } else {
+        exit(1);
+        return 0.0;
+    }
 }
 - (BOOL)castB:(id)v {
     return NO;
